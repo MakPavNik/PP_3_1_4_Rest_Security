@@ -1,11 +1,43 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<!--<head>-->
+<!--    <title>Spring Security Example</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>User, welcome spring boot security page!</h1>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8"/>
+    <title>Loop</title>
+    <form th:action="@{/logout}" th:method="POST">
+        <button type="submit">Выйти из учетной записи </button>
+    </form>
+    <style>table th, table td {
+        padding: 5px;
+    }</style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>first name</th>
+        <th>last name</th>
+        <th>email</th>
+    </tr>
 
-
+    <tr th:each="user: ${user}">
+        <td th:utext="${user.id}">id</td>
+        <td th:utext="${user.firstName}">First name</td>
+        <td th:utext="${user.lastName}">Last name</td>
+        <td th:utext="${user.email}">Email</td>
+<!--        <td><a th:href="@{/logout}">Logout</a></td>-->
+    </tr>
+</table>
 </body>
 </html>
