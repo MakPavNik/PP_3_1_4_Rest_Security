@@ -43,26 +43,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(Set.of(roleRepository.findRoleByRole("ROLE_USER")));
         return userRepository.save(user);
     }
-/*
-    public void saveUser(User user, String role) {
-        Role roleDefault = new Role();
-        roleDefault.setRole("ROLE_USER");
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(roleDefault);
-        if (role.indexOf("ROLE_") != -1) {
-            Role temp = new Role();
-            temp.setRole(role);
-            roleSet.add(temp);
-        }
-        user.setRoles(roleSet);
-        if (userDao.loadUserByUsername(user.getLogin()) == null) {
-            for (Role temp : user.getRoles()) {
-                roleRepository.save(temp);
-            }
-            userDao.addUser(user);
-        }
-    }
-*/
+
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
@@ -74,8 +55,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found!");
         }
-        return new org.springframework.security.core.userdetails
-                .User(user.getLogin(), user.getPassword(), mapRolesToAuthorities(user.getRoles())); //user.getUsername()
+        return user;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -89,10 +69,4 @@ public class UserService implements UserDetailsService {
     public User getUser(Long id) {
         return userRepository.findUserById(id);
     }
-
-//    public User getUser(String username) {
-//        return userRepository.findByUsername(username);
-//    }
-
-
 }
