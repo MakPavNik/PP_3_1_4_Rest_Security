@@ -1,14 +1,11 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -164,7 +161,6 @@ public class User implements UserDetails {
         for (Role role : roles) {
             String [] s = role.getRole().split("_");
             result += s[1] + " ";
-            //result += role.getRole() + " ";
         }
         return result;
     }

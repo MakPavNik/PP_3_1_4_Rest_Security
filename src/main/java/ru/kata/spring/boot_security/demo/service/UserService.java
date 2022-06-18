@@ -16,7 +16,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,8 +53,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException { //String username
-        User user = findByUsername(login); //username
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = findByUsername(login);
         if (user == null) {
             throw new UsernameNotFoundException("User not found!");
         }

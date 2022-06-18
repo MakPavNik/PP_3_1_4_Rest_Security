@@ -9,14 +9,13 @@
     <title>Users</title>
 </head>
 <body>
-<!--Шапка страницы-->
+
 <header>
     <div class="container-fluid" style="padding: 0">
         <div class="row">
             <div class="col-12">
 
                 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                    <!-- Navbar content -->
                     <div class="collapse navbar-collapse" id="user">
                         <ul class="navbar-nav mr-auto">
                             <a class="navbar-brand font-weight-bold" th:text="${user.getLogin()}"></a>
@@ -35,13 +34,8 @@
     </div>
 </header>
 
-
-<!--Основной контент страницы-->
-
 <div class="container-fluid">
     <div class="row">
-
-        <!--Панель слева-->
 
         <div class="col-2" style="padding: 15px 0 0;">
             <ul class="nav nav-pills flex-column">
@@ -54,12 +48,8 @@
             </ul>
         </div>
 
-        <!--Панель справа-->
-
         <div class="col-10 bg-light">
             <div class="tab-content" style="padding-top: 15px; height: 100vh">
-
-                <!--Панель админа-->
 
                 <div class="tab-pane fade show active" id="adminPanel">
                     <h2>Admin panel</h2>
@@ -72,8 +62,6 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-
-                        <!--Таблица пользователей-->
 
                         <div class="tab-pane fade show active" id="allUsers">
                             <div class="card">
@@ -115,7 +103,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Вкладка для нового пользователя-->
 
                         <div class="tab-pane fade" id="newUser">
                             <div class="form-group">
@@ -177,8 +164,6 @@
                     </div>
                 </div>
 
-                <!--Панель пользователя-->
-
                 <div class="tab-pane fade" id="userPanel">
                     <h2>User information-page</h2>
                     <div class="card">
@@ -213,8 +198,6 @@
         </div>
     </div>
 </div>
-
-<!--Модальное окно редактирования пользователя-->
 
 <div th:each="updateUser : ${users}">
     <div class="modal fade" id="edit" th:attrappend="id=${updateUser.getId()}" tabindex="-1" role="dialog"
@@ -288,9 +271,6 @@
     </div>
 </div>
 
-
-<!--Модальное окно удаления пользователя-->
-
 <div th:each="deleteUser : ${users}">
     <div class="modal fade" id="delete" th:attrappend="id=${deleteUser.getId()}" tabindex="-1"
          role="dialog"
@@ -342,16 +322,6 @@
                                     <input class="form-control" type="text" name="email" id="deleteRoles"
                                            th:value="*{rolesToString}" disabled>
                                 </label>
-<!--                                <label class="container-fluid col-6" for="deleteRoleSet"><strong>Role</strong>-->
-<!--                                    <select class="form-control" id="deleteRoleSet" name="role" multiple size="2"-->
-<!--                                            disabled>-->
-<!--                                        <div th:each="role : ${user.getRoles()}">-->
-<!--                                            <option th:text="${role.toString()}" th:value="${role.getId()}"-->
-<!--                                                    name="roleSet"-->
-<!--                                                    th:selected="${deleteUser.getRoleSet().contains(role.getName())}"/>-->
-<!--                                        </div>-->
-<!--                                    </select>-->
-<!--                                </label>-->
                                 <h1></h1>
                             </div>
                             <div class="modal-footer">
