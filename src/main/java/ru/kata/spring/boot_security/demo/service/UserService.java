@@ -14,6 +14,7 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,7 +41,10 @@ public class UserService implements UserDetailsService {
     }
 
     public User saveUser(User user) {
-        user.setRoles(Set.of(roleRepository.findRoleByRole("ROLE_USER")));
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+        }
+        user.getRoles().add(roleRepository.findRoleByRole("ROLE_USER"));
         return userRepository.save(user);
     }
 
@@ -63,7 +67,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findByUsername(String username) {
-        return userRepository.findUserByLogin(username);
+        return userRepository.findUserByEmail(username);
     }
 
     public User getUser(Long id) {

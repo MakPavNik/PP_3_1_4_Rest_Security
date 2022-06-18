@@ -1,11 +1,14 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +25,8 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
+    private int age;
     @Column(name = "email")
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -38,6 +43,22 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public User(String firstName, String lastName, int age, String email, Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Long getId() {
@@ -95,7 +116,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override
@@ -130,12 +151,21 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public String getRolesToString() {
+        String result = new String();
+        for (Role role : roles) {
+            String [] s = role.getRole().split("_");
+            result += s[1] + " ";
+            //result += role.getRole() + " ";
+        }
+        return result;
     }
 }
