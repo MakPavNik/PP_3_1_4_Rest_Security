@@ -14,8 +14,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String login;
+//    @Column
+//    private String login;
     @Column
     private String password;
     @Column(name = "first_name")
@@ -90,13 +90,13 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
-    }
+//    public String getLogin() {
+//        return login;
+//    }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+//    public void setLogin(String login) {
+//        this.login = login;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
