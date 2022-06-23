@@ -26,84 +26,50 @@ public class UserRestController {
         this.roleRepository = roleRepository;
     }
 
-//    @GetMapping("admin/{id}")
-//    public User getAdmin(@PathVariable("id") Long id){
-//        User user = userService.getUser(id);
-//        return user;
-//    }
-
-//    @GetMapping("admin/users")
-//    public List<User> getTableUsers() {
-//        List<User> allUsers = userService.findAll();
-//        return allUsers;
-//    }
-
+    //----Получение списка рабтников-----
     @GetMapping(value = "/admin/users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public List<User> getAllUsers() {
+        List<User> allUsers = userService.findAll();
+        return allUsers;
     }
 
-//    @GetMapping("admin/add")
-//    public String addUserTable(User user) {
-//        return "add";
-//    }
-
+    //----Получение рабтника-----
     @GetMapping(value = "/admin/users/{id}")
-    public User getUser(@PathVariable("id") Long id ) {
+    public User getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
 
     //-------- Не понятно нужен ли---------//
     @GetMapping(value = "/admin/{id}")
-    public User getAdmin(@PathVariable("id") Long id ) {
+    public User getAdmin(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
-//    @PostMapping("admin/users")
-//    public User addUser(@RequestBody User user){
-//        userService.saveUser(user);
-//        return user;
-//    }
-
+    //------Добавление работника
     @PostMapping("/admin/users")
-    public void newUser(@RequestBody User user){
-        userService.saveUser(user);
-    }
-
-
-    @DeleteMapping("/admin/delete/{id}")
-    public void deleteUser (@PathVariable("id") Long id){
-        userService.deleteById(id);
-    }
-
-//    @GetMapping("admin/update/{id}")
-//    public String updateUserTable(@PathVariable("id") Long id, Model model) {
-//        User user = userService.findById(id);
-//        model.addAttribute("user", user);
-//        return "update";
-//    }
-
-    @PutMapping("/admin/users")
-    public User updateUser(@RequestBody User user) {
-        HashSet<Role> roles = new HashSet<>();
-        for(Role role : roles) {
-            roles.add(role);
-        }
-        user.setRoles(roles);
+    public User newUser(@RequestBody User user) {
         userService.saveUser(user);
         return user;
     }
-//    @PutMapping("admin/update")
-//    public User updateUser(RequestBody User user){
-//        userService.saveUser(user);
-//        return user;
-//    }
 
-//    @GetMapping("user/{id}")
-//    public String infoUser(@PathVariable("id") Long id){
-//        User user = userService.getUser(id);
-//        return "user";
+    //----------Удаление работника
+    @DeleteMapping("/admin/users/{id}")
+    public void deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+    }
+
+    //-------Изменение работника
+    @PutMapping("/admin/users")
+    public User updateUser(@RequestBody User user) {
+        userService.saveUser(user);
+        return user;
+    }
+
+//    @GetMapping("/roles")
+//    public ResponseEntity<List<Role>> showAllRoles() {
+//        List<Role> roles = roleRepository.getAllRoles();
+//        return new ResponseEntity<>(roles, HttpStatus.OK);
 //    }
 }
 

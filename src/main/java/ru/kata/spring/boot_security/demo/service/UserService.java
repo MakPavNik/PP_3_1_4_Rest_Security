@@ -72,4 +72,12 @@ public class UserService implements UserDetailsService {
     public User getUser(Long id) {
         return userRepository.findUserById(id);
     }
+
+//    public List<Role> getAllRoles() {
+//        return roleRepository.getAllRoles();
+//    }
+
+//    public void saveRole(Role role) {
+//        roleRepository.saveRole(role);
+//    }
 }
