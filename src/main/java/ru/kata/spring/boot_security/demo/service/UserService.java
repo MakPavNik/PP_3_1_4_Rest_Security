@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.Dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -20,15 +21,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
-
+    private RoleDao roleDao;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, RoleDao roleDao) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.roleDao = roleDao;
     }
 
     public User findById(Long id) {
@@ -73,11 +75,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserById(id);
     }
 
-//    public List<Role> getAllRoles() {
-//        return roleRepository.getAllRoles();
-//    }
+    public List<Role> getAllRoles() {
+        return roleDao.getAllRoles();
+    }
+    public void saveRole(Role role) {
+        roleDao.saveRole(role);
+    }
 
-//    public void saveRole(Role role) {
-//        roleRepository.saveRole(role);
-//    }
+
 }

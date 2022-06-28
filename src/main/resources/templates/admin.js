@@ -13,19 +13,19 @@ const userFetchService = {
         'Referer': null
     },
 
-    findAllUsers: async () => await fetch('api/admin/users'),
-    findUser: async () => await fetch('api/admin/user'),
-    addNewUser: async (user) => await fetch('api/admin/users', {
+    findAllUsers: async () => await fetch('/api/admin/users'),
+    findUser: async () => await fetch('/api/admin/user'), ////////////////
+    addNewUser: async (user) => await fetch('/api/admin/user', {/////////////////////
         method: 'POST',
         headers: userFetchService.head,
         body: JSON.stringify(user)
     }),
-    showOneUser: async (id) => await fetch(`api/admin/users/${id}`),
-    deleteUser: async (id) => await fetch(`api/admin/users/${id}`, {
+    showOneUser: async (id) => await fetch(`/api/admin/users/${id}`),
+    deleteUser: async (id) => await fetch(`/api//admin/users/delete/${id}`, {
         method: 'DELETE',
         headers: userFetchService.head
     }),
-    updateUser: async (user) => await fetch('api/admin/users', {
+    updateUser: async (user) => await fetch('/api/admin/update/users', {
         method: 'PUT',
         headers: userFetchService.head,
         body: JSON.stringify(user)
@@ -93,7 +93,7 @@ async function tableUsers() {
 }
 
 const roleJson = []
-
+        //--------Нет такого
 fetch('api/roles')
     .then(res => res.json())
     .then(roles => roles.forEach(role => roleJson.push(role)))
@@ -135,6 +135,7 @@ async function addNewUser() {
 async function addNewUserForm() {
     let form = $(`#addUserForm`)
 
+    //-----------Нет такого
     fetch('/api/roles').then(function (response) {
         form.find('#newRoles').empty();
         response.json().then(roleList => {

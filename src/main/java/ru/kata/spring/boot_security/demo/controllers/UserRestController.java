@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -34,42 +35,51 @@ public class UserRestController {
     }
 
     //----Получение рабтника-----
-    @GetMapping(value = "/admin/users/{id}")
-    public User getUser(@PathVariable("id") Long id) {
-        return userService.getUser(id);
+    @GetMapping(value = "/admin/user")
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
     }
 
 
     //-------- Не понятно нужен ли---------//
-    @GetMapping(value = "/admin/{id}")
+    @GetMapping("/admin/users/{id}")
     public User getAdmin(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
     //------Добавление работника
-    @PostMapping("/admin/users")
+    @PostMapping("/admin/user")
     public User newUser(@RequestBody User user) {
         userService.saveUser(user);
         return user;
     }
 
     //----------Удаление работника
-    @DeleteMapping("/admin/users/{id}")
+    @DeleteMapping("/admin/users/{id}")////////////////////////
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
     }
 
     //-------Изменение работника
-    @PutMapping("/admin/users")
+    @PutMapping("/admin/update/users")///////////////////////////
     public User updateUser(@RequestBody User user) {
         userService.saveUser(user);
         return user;
     }
 
-//    @GetMapping("/roles")
-//    public ResponseEntity<List<Role>> showAllRoles() {
-//        List<Role> roles = roleRepository.getAllRoles();
-//        return new ResponseEntity<>(roles, HttpStatus.OK);
-//    }
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> showAllRoles() {
+        List<Role> roles = roleRepository.findAll();
+        return new ResponseEntity<>(roles, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/user")
+    public User getOneCurrentUser() {
+        return (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+    }
 }
 
