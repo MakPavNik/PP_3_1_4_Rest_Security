@@ -3,7 +3,7 @@ $(async function () {
     await tableUserId();
     await addNewUserForm();
     await addNewUser();
-    await getDefaultModal();
+    await getDefaultModal();``
 })
 
 const userFetchService = {
@@ -13,19 +13,20 @@ const userFetchService = {
         'Referer': null
     },
 
-    findAllUsers: async () => await fetch('/api/admin/users'),
+    findAllUsers: async () => await fetch('api/admin/users'),
     findUser: async () => await fetch('/api/admin/user'), ////////////////
-    addNewUser: async (user) => await fetch('/api/admin/user', {/////////////////////
+    addNewUser: async (user) => await fetch('api/admin/user', {/////////////////////
         method: 'POST',
         headers: userFetchService.head,
         body: JSON.stringify(user)
     }),
-    showOneUser: async (id) => await fetch(`/api/admin/users/${id}`),
-    deleteUser: async (id) => await fetch(`/api//admin/users/delete/${id}`, {
+    showOneUser: async (id) => await fetch(`api/admin/users/${id}`),
+
+    deleteUser: async (id) => await fetch(`api/admin/users/${id}`, {
         method: 'DELETE',
         headers: userFetchService.head
     }),
-    updateUser: async (user) => await fetch('/api/admin/update/users', {
+    updateUser: async (user) => await fetch('api/admin/update/users', {
         method: 'PUT',
         headers: userFetchService.head,
         body: JSON.stringify(user)
@@ -46,8 +47,8 @@ async function tableUserId() {
                     <td>${user.lastName}</td>
                     <td>${user.age}</td>
                     <td>${user.email}</td>
-                    <td>${user.roles.map(role => role.name)}</td>
-                </tr>            
+                    <td>${user.roles.map(role => role.role)}</td>
+                </tr>
             )`
             table.append(tablePrincipal)
         })
@@ -67,7 +68,7 @@ async function tableUsers() {
                     <td>${user.lastName}</td>
                     <td>${user.age}</td>
                     <td>${user.email}</td>
-                    <td>${user.roles.map(role => role.name)}</td>
+                    <td>${user.roles.map(role => role.role)}</td>
                     <td>
                         <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
                         data-toggle="modal" data-target="#someDefaultModal">Edit</button>
@@ -93,8 +94,8 @@ async function tableUsers() {
 }
 
 const roleJson = []
-        //--------Нет такого
-fetch('api/roles')
+//--------Нет такого
+fetch('/api/roles')
     .then(res => res.json())
     .then(roles => roles.forEach(role => roleJson.push(role)))
 
@@ -136,12 +137,12 @@ async function addNewUserForm() {
     let form = $(`#addUserForm`)
 
     //-----------Нет такого
-    fetch('/api/roles').then(function (response) {
+    fetch('api/roles').then(function (response) {
         form.find('#newRoles').empty();
         response.json().then(roleList => {
             roleList.forEach(role => {
                 form.find('#newRoles')
-                    .append($('<option>').val(role.id).text(role.name));
+                    .append($('<option>').val(role.id).text(role.role));
             })
         })
     })
@@ -214,12 +215,12 @@ async function deleteUser(modal, id) {
         modal.find('.modal-body').append(bodyForm)
     })
 
-    fetch('/api/roles').then(function (response) {
+    fetch('api/roles').then(function (response) {
         modalForm.find('#deleteRoles').empty();
         response.json().then(roleList => {
             roleList.forEach(role => {
                 modalForm.find('#deleteRoles')
-                    .append($('<option>').val(role.id).text(role.name));
+                    .append($('<option>').val(role.id).text(role.role));
             })
         })
     })
@@ -258,7 +259,7 @@ async function editUser(modal, id) {
                                 </div>
                                 <div class="form-group">
                                     <span class="font-weight-bold">Last Name</span>
-                                    <input type="text" value="${user.name}" name="lastName" id="lastName" class="form-control">
+                                    <input type="text" value="${user.lastName}" name="lastName" id="lastName" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <span class="font-weight-bold">Age</span>
@@ -278,12 +279,12 @@ async function editUser(modal, id) {
         modal.find('.modal-body').append(bodyForm)
     })
 
-    fetch('/api/roles').then(function (response) {
+    fetch('api/roles').then(function (response) {
         modalForm.find('#updateRoles').empty();
         response.json().then(roleList => {
             roleList.forEach(role => {
                 modalForm.find('#updateRoles')
-                    .append($('<option>').val(role.id).text(role.name));
+                    .append($('<option>').val(role.id).text(role.role));
             })
         })
     })

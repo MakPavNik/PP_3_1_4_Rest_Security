@@ -43,7 +43,7 @@ public class UserRestController {
     }
 
 
-    //-------- Не понятно нужен ли---------//
+    //-----------------//
     @GetMapping("/admin/users/{id}")
     public User getAdmin(@PathVariable("id") Long id) {
         return userService.getUser(id);
@@ -57,13 +57,13 @@ public class UserRestController {
     }
 
     //----------Удаление работника
-    @DeleteMapping("/admin/users/{id}")////////////////////////
+    @DeleteMapping("/admin/users/{id}")
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
     }
 
     //-------Изменение работника
-    @PutMapping("/admin/update/users")///////////////////////////
+    @PutMapping("/admin/update/users")
     public User updateUser(@RequestBody User user) {
         userService.saveUser(user);
         return user;
@@ -73,13 +73,6 @@ public class UserRestController {
     public ResponseEntity<List<Role>> showAllRoles() {
         List<Role> roles = roleRepository.findAll();
         return new ResponseEntity<>(roles, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/user")
-    public User getOneCurrentUser() {
-        return (User) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
     }
 }
 

@@ -70,7 +70,6 @@
                         </ul>
                         <div class="tab-content">
 
-
                             <!--Таблица пользователей&ndash;&gt;-->
                             <div class="tab-pane fade show active" id="allUsers">
                                 <div class="card">
@@ -219,7 +218,8 @@
         await tableUserId();
         await addNewUserForm();
         await addNewUser();
-        await getDefaultModal();``
+        await getDefaultModal();
+        ``
     })
 
     const userFetchService = {
@@ -263,7 +263,7 @@
                     <td>${user.lastName}</td>
                     <td>${user.age}</td>
                     <td>${user.email}</td>
-                    <td>${user.roles.map(role => role.role)}</td>
+                    <td>${user.roles.map(role => role.role.slice(5, 10))}</td>
                 </tr>
             )`
                 table.append(tablePrincipal)
@@ -284,7 +284,7 @@
                     <td>${user.lastName}</td>
                     <td>${user.age}</td>
                     <td>${user.email}</td>
-                    <td>${user.roles.map(role => role.role)}</td>
+                    <td>${user.roles.map(role => role.role.slice(5, 10))}</td>
                     <td>
                         <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
                         data-toggle="modal" data-target="#someDefaultModal">Edit</button>
@@ -310,7 +310,6 @@
     }
 
     const roleJson = []
-    //--------Нет такого
     fetch('/api/roles')
         .then(res => res.json())
         .then(roles => roles.forEach(role => roleJson.push(role)))
@@ -352,13 +351,12 @@
     async function addNewUserForm() {
         let form = $(`#addUserForm`)
 
-        //-----------Нет такого
         fetch('api/roles').then(function (response) {
             form.find('#newRoles').empty();
             response.json().then(roleList => {
                 roleList.forEach(role => {
                     form.find('#newRoles')
-                        .append($('<option>').val(role.id).text(role.role));
+                        .append($('<option>').val(role.id).text(role.role.slice(5, 10)));
                 })
             })
         })
@@ -436,7 +434,7 @@
             response.json().then(roleList => {
                 roleList.forEach(role => {
                     modalForm.find('#deleteRoles')
-                        .append($('<option>').val(role.id).text(role.role));
+                        .append($('<option>').val(role.id).text(role.role.slice(5, 10)));
                 })
             })
         })
@@ -500,7 +498,7 @@
             response.json().then(roleList => {
                 roleList.forEach(role => {
                     modalForm.find('#updateRoles')
-                        .append($('<option>').val(role.id).text(role.role));
+                        .append($('<option>').val(role.id).text(role.role.slice(5, 10)));
                 })
             })
         })
@@ -539,8 +537,6 @@
                 modal.modal('hide')
             }
         })
-
-
     }
 </script>
 </body>
