@@ -68,7 +68,9 @@ public class UserService implements UserDetailsService {
     }
 
     public User findByUsername(String username) {
-        return userRepository.findUserByEmail(username);
+        User user = userRepository.findUserByEmail(username);
+        user.getRoles().size();
+        return user;
     }
 
     public User getUser(Long id) {
